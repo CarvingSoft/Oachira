@@ -1,0 +1,26 @@
+
+
+
+      <table class="combined-table">
+        <thead *ngFor="let i of testPickList.customers; let in=index">
+            <tr><th>{{i.name}}</th></tr>
+            <br>
+          <table>
+            <tr>
+              <th>Product</th>
+              <th>Unit</th>
+              <th>Quantity</th>
+            </tr>
+            <tr  *ngFor="let x of testPickList.customers[in].products">
+              <td>{{x.proudctName}}</td>
+              <td>{{x.unit}}</td>
+              <td>{{x.quantity}}</td>
+            </tr>
+          </table>
+          <br><br>
+        </thead>
+      </table>
+
+
+
+
