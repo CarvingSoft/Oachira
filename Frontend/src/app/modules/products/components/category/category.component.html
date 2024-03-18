@@ -1,0 +1,164 @@
+
+<form [formGroup]="productCategoryForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <div class="row">
+      <div class="col">
+        <mat-card-header>
+          <mat-card-title> PRODUCT CATEGORY</mat-card-title>
+        </mat-card-header>
+      </div>
+      <div class="col" *ngIf="addStatus != 'true'">
+        <mat-card-header>
+          <button mat-mini-fab color="primary" style="margin-left: auto;" type="button" aria-label="Example icon button with a home icon" class="d-block mr-0 ml-auto" onClick="history.back()">
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+        </mat-card-header>
+      </div>
+    </div><br>
+
+    <div class="row box">
+      <div class="col">
+        <mat-card-content >
+          <mat-card>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Name" formControlName="categoryName">
+                  <mat-error *ngIf="productCategoryForm.controls['categoryName'].hasError('required')">
+                    Name <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <br><br><div class="col">
+              <section class="example-section" >
+                <mat-radio-group class="example-radio-group" aria-label="Taxable:" formControlName="taxable"><h4>Taxable :</h4>
+                  <mat-radio-button class="example-radio-button" value= true>Yes</mat-radio-button><br>
+                  <mat-radio-button class="example-radio-button" value= false>No</mat-radio-button>
+                </mat-radio-group>
+              </section>
+            </div>
+
+            <ng-container *ngIf="imageUrl; else noImage">
+              <img [src]="imageUrl" alt="Image" title="Image" height="100" width="100" style="margin-left: 150px; margin-top: 50px;"/>
+            </ng-container>
+
+            <ng-template #noImage>
+              <img src="../../../../../../assets/img/no_image_part.png" alt="Alternative Image" title="Image" height="100" width="100" />
+            </ng-template>
+            <input *ngIf="!imageUrl" type="file" id="fileInput" (change)="onFileSelected($event)"/>
+            <mat-icon *ngIf="imageUrl && !editstatus" style="font-size: 25px;" (click)="clearFileInput()">delete</mat-icon>
+            <mat-icon *ngIf="imageUrl && editstatus" style="font-size: 25px;" (click)="deleteImage(imageUrl)">delete</mat-icon>
+
+            <br><div>
+              <mat-slide-toggle formControlName="status">Status</mat-slide-toggle>
+            </div>
+          </mat-card>
+
+        </mat-card-content>
+      </div>
+      <div class="col" *ngIf="addStatus != 'true'">
+        <mat-card>
+          <mat-card-header>SubCategory: </mat-card-header>
+          <div formArrayName="subCategories">
+            <div *ngFor="let quantity of subCategories().controls; let i=index" [formGroupName]="i" class="row">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field>
+                    <input matInput placeholder="SubCategoryName" formControlName="subCategoryName">
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <ng-container *ngIf="imageUrlSub[i]; else noImage">
+                    <img [src]="imageUrlSub[i]" alt="Image" title="Image" height="100" width="100" style="margin-left: 150px; margin-top: 50px;"/>
+                  </ng-container>
+
+                  <ng-template #noImage>
+                    <img src="../../../../../../assets/img/no_image_part.png" alt="Alternative Image" title="Image" height="100" width="100" />
+                  </ng-template>
+                  <input type="file" id="fileInput" (change)="onFileSelectedSub($event, i)"/>
+                </div>
+
+                  <mat-icon (click)="removeSubCategory(i)" style="color: green; margin-top: 7px;">close</mat-icon>
+              </div>
+
+            </div>
+
+              &nbsp;&nbsp;<mat-icon style="color: green; margin-top: 7px;" (click)="addSubCategory()">playlist_add</mat-icon>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <mat-card-actions>
+      <button *ngIf="!editstatus" mat-raised-button  type="submit" [disabled]="productCategoryForm.pristine || !productCategoryForm.valid ">
+        <mat-icon style="font-size: 25px;">save</mat-icon>
+      </button>&nbsp;&nbsp;
+      <button *ngIf="editstatus" mat-raised-button  type="button" [disabled]="!productCategoryForm.valid" (click)="editFunction()">
+        <mat-icon style="font-size: 25px;">edit_note</mat-icon>
+      </button>&nbsp;&nbsp;
+
+      <button mat-raised-button *ngIf="addStatus === 'true'" type="button" class="cancel-button" (click)="onCancelClick()">
+        <mat-icon style="font-size: 25px;">cancel_presentation</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<!-- ------------------------------------------------------------------------------------------------- -->
+<br><mat-card *ngIf="addStatus != 'true'">
+  <mat-card-header>
+    <mat-card-title style="color: green;"> PRODUCT CATEGORY</mat-card-title>
+  </mat-card-header>
+
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+
+  <table class="styled-table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Image Uploaded</th>
+            <th>Category</th>
+            <th>Taxable</th>
+            <th>Manage</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let element of filtered let i = index">
+            <td [style.background-color]="element.status == false ? 'pink' : null">{{element.id}}</td>
+            <td [style.background-color]="element.status == false ? 'pink' : null">
+              <ng-container *ngIf="element.fileUrl; else alternativeImage">
+                <img src="{{ element.fileUrl }}" style="width: 50px; height: 50px;"
+                  (mouseover)="enlargeImage(i, true)"
+                  (mouseout)="enlargeImage(i, false)"
+                  [ngClass]="{'enlarged': isImageEnlarged[i]}" />
+              </ng-container>
+
+
+              <ng-template #alternativeImage>
+                <img src="../../../../../../assets/img/no_image_part.png" alt="Alternative Image" style="width: 50px; height: 50px;" />
+              </ng-template>
+            </td>
+            <td [style.background-color]="element.status == false ? 'pink' : null">{{element.categoryName}}</td>
+            <td [style.background-color]="element.status == false ? 'pink' : null">{{element.taxable == true? "Yes" : "No"}}</td>
+            <td [style.background-color]="element.status == false ? 'pink' : null">
+                <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+              <i  (click)="editCategory(element.id)"  class="fa fa-edit" style="font-size: 20px; color:green"></i>
+              &nbsp;&nbsp;
+              <i  (click)="deleteCategory(element.id)" class="fa fa-trash" style="font-size: 20px; color:red"></i>
+            </td>
+            <td [style.background-color]="element.status == false ? 'pink' : null">
+              <mat-slide-toggle [(ngModel)]="element.status" [ngModelOptions]="{standalone: true}" (change)="onToggleChange($event, element.id)"></mat-slide-toggle>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="currentPage - 1" (page)="onPageChange($event)"
+    [pageSizeOptions]="[10, 20, 30,40,50,100]">
+  </mat-paginator>
+ </mat-card>

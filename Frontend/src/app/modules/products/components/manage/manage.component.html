@@ -1,0 +1,77 @@
+<section class="home_layout">
+  <div id="section_bg" class="background">
+    <mat-grid-list gutterSize="5px" cols="5" rowHeight="2:1">
+
+      <!-- <mat-grid-tile class="container">
+        <button class="btn btn" mat-fab aria-label="Example icon button with a bookmark icon" type="button" (click)="home()">
+          <span class="material-icons" style="color: white; font-size: 45px;">home</span>
+        </button>
+        <div class="button_align">Home</div>
+      </mat-grid-tile> -->
+
+      <mat-grid-tile class="container">
+        <button  class="btn btn" mat-fab aria-label="Example icon button with a bookmark icon" routerLink="category">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">category</span>
+        </button>
+        <div class="button_align">Category</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="container">
+        <button  class="btn btn" mat-fab aria-label="Example icon button with a bookmark icon" routerLink="subcategory">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">view_column</span>
+        </button>
+        <div class="button_align">SubCategory</div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile class="container">
+        <button mat-fab class="btn btn-3" aria-label="Example icon button with a bookmark icon" routerLink="brand">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">book</span>
+        </button>
+        <div class="button_align">Brand</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="container">
+        <button class="btn btn-4" mat-fab color="accent" aria-label="Example icon button with a bookmark icon" routerLink="unit">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">point_of_sale</span>
+        </button>
+        <div class="button_align">Unit</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="container">
+        <button class="btn btn-4" mat-fab color="accent" aria-label="Example icon button with a bookmark icon" routerLink="location">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">pin_drop</span>
+        </button>
+        <div class="button_align">Location</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="container">
+        <button class="btn btn-4" mat-fab color="accent" aria-label="Example icon button with a bookmark icon" routerLink="hsn">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">pin</span>
+        </button>
+        <div class="button_align">HSN</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button class="btn btn-6" mat-fab color="accent" aria-label="Example icon button with a bookmark icon" routerLink="gst">
+          <span class="material-icons" style="font-size: 45px; color: rgb(255, 255, 255);">money</span>
+        </button>
+        <div class="button_align">GST</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button class="btn btn-6" mat-fab color="accent" aria-label="Example icon button with a bookmark icon" routerLink="distributor">
+          <span class="material-icons" style="font-size: 45px; color: rgb(255, 255, 255);">storefront</span>
+        </button>
+        <div class="button_align">Distributor</div>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="container">
+        <button class="btn btn-5" mat-fab color="accent" aria-label="Example icon button with a bookmark icon" routerLink="add">
+          <span class="material-icons" style="color: rgb(255, 255, 255); font-size: 45px;">fact_check</span>
+        </button>
+        <div class="button_align">Product</div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</section>

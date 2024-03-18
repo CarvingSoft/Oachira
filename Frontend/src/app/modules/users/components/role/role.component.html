@@ -1,0 +1,96 @@
+<!-- <mat-toolbar style="background-color: rgb(33,142,67); color: white; height: 40px;">
+  BRAND
+  <span class="material-icons" style="font-size: 25px;margin-left: auto;" (click)="getBrands()">view_list</span>
+</mat-toolbar> -->
+
+<form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+  <mat-card class="background">
+    <div class="row" *ngIf="addStatus != 'true'">
+      <div class="col">
+        <mat-card-header>
+          <mat-card-title> ROLE </mat-card-title>
+        </mat-card-header>
+      </div>
+      <div class="col">
+        <mat-card-header>
+          <button mat-mini-fab color="primary" type="button" aria-label="Example icon button with a home icon"
+          class="d-block mr-0 ml-auto" onClick="history.back()" style="margin-left: auto;">
+            <span class="material-icons" style="color: white;">exit_to_app</span>
+          </button>
+        </mat-card-header>
+      </div>
+    </div>
+    <mat-card-content >
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Role" formControlName="roleName">
+            <mat-error *ngIf="roleForm.controls['roleName'].hasError('required')">
+              Name <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <mat-slide-toggle formControlName="status">Status</mat-slide-toggle>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button *ngIf="!editstatus" mat-raised-button  type="submit" [disabled]="roleForm.pristine || !roleForm.valid ">
+        <mat-icon style="font-size: 25px;">save</mat-icon>
+      </button>&nbsp;&nbsp;
+      <button *ngIf="editstatus" mat-raised-button  type="button" [disabled]="!roleForm.valid" (click)="editFunction()">
+        <mat-icon style="font-size: 25px;">edit_note</mat-icon>
+      </button>&nbsp;&nbsp;
+
+      <button mat-raised-button *ngIf="addStatus === 'true'" type="button" class="cancel-button" (click)="onCancelClick()">
+        <mat-icon style="font-size: 25px;">cancel_presentation</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+
+<!-- --------------------------------------------------------------------------------------------------------------------------- -->
+
+<br><mat-card *ngIf="addStatus != 'true'">
+  <mat-card-header>
+    <mat-card-title style="color: green;"> ROLES</mat-card-title>
+  </mat-card-header>
+
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+  <table class="styled-table">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Role Name</th>
+            <th>Status</th>
+            <th>Manage</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let element of filtered">
+            <td>{{element.id}}</td>
+            <td>{{element.roleName}}</td>
+            <td>{{element.status}}</td>
+            <td>
+              <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+              <i  (click)="editRole(element.id)"  class="fa fa-edit" style="font-size: 20px; color:green"></i>
+              &nbsp;&nbsp;
+              <i  (click)="deleteRole(element.id)" class="fa fa-trash" style="font-size: 20px; color:red"></i>
+            </td>
+            <td [style.background-color]="element.status == false ? 'pink' : null">
+              <mat-slide-toggle [(ngModel)]="element.status" [ngModelOptions]="{standalone: true}" (change)="onToggleChange($event, element.id)"></mat-slide-toggle>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+</mat-card>

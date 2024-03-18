@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Wright Aero Components </title>
+
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <section class="home-section">
+    <!-- <div class="home-section"> -->
+      <div class="home-content">
+        <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic" style="color: rgb(119, 181, 198);">Users</div>
+              <!-- <div class="number">{{ pendingRfqs }}</div> -->
+              <div class="number">250</div>
+              <div class="indicator">
+                <!-- <i class='bx bx-up-arrow-alt'></i> -->
+                <!-- <span class="text">Up from yesterday</span> -->
+              </div>
+            </div>
+            <i class='bx bx-user cart one'></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic" style="color: rgb(57, 120, 55);"> Purchases</div>
+              <!-- <div class="number">{{ saleCount }}</div> -->
+              <div class="number">3200</div>
+              <div class="indicator">
+                <!-- <i class='bx bx-up-arrow-alt'></i> -->
+                <!-- <span class="text">Up from yesterday</span> -->
+              </div>
+            </div>
+            <i class='bx bxs-cart-add cart two'></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic" style="color: rgb(57, 120, 55);">Sales</div>
+              <!-- <div class="number">{{ quotCount }}</div> -->
+              <div class="number">2500</div>
+              <div class="indicator">
+                <!-- <i class='bx bx-up-arrow-alt'></i> -->
+                <!-- <span class="text">Up from yesterday</span> -->
+              </div>
+            </div>
+            <i class='bx bx-cart cart three'></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic" style="color: rgb(12, 30, 11);"> Stock</div>
+              <!-- <div class="number">{{stockCount}}</div> -->
+              <div class="number">1000</div>
+              <div class="indicator">
+                <!-- <i class='bx bx-down-arrow-alt down'></i> -->
+                <!-- <span class="text">Down From Today</span> -->
+              </div>
+            </div>
+            <i class='bx bxs-cart-download cart four'></i>
+          </div>
+        </div>
+        </div>
+        </section>
+
+  <div class="row box">
+    <div class="graph-container">
+      <mat-card>
+        <canvas id="salesChart" width="400" height="200"></canvas>
+      </mat-card>
+    </div>
+    <div class="graph-container">
+      <mat-card>
+        <canvas id="purchaseChart" width="400" height="200"></canvas>
+      </mat-card>
+    </div>
+
+    <div>
+      <mat-card >
+        <mat-card-header>
+          <mat-card-title style="color: green;">CHEQUE IN QUE</mat-card-title>
+        </mat-card-header>
+
+        <mat-form-field>
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
+
+        <table class="styled-table">
+          <thead>
+              <tr>
+                  <th>ChequeNo</th>
+                  <th>ChequeDate</th>
+                  <th>InvoiceNo</th>
+                  <th>Description</th>
+                  <th>Status</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let element of filtered let i=index">
+                  <td>{{element.chequeNo}}</td>
+                  <td>{{element.chequeClearenceDate| date: 'dd/MM/yyyy'}}</td>
+                  <td>{{element.entry.purchaseInvoiceNo}}</td>
+                  <td>{{element.description}}</td>
+
+                  <td>
+                    <mat-slide-toggle [(ngModel)]="element.status" [ngModelOptions]="{standalone: true}" (change)="onToggleChange($event, element.id)"></mat-slide-toggle>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+        <mat-paginator #paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="currentPage - 1"
+        (page)="onPageChange($event)" [pageSizeOptions]="[5, 10, 20,30,40,50,100]">
+        </mat-paginator>
+      </mat-card>
+    </div>
+  </div>
+
+
+
+  <!-- <script>
+   let sidebar = document.querySelector(".sidebar");
+let sidebarBtn = document.querySelector(".sidebarBtn");
+sidebarBtn.onclick = function() {
+  sidebar.classList.toggle("active");
+  if(sidebar.classList.contains("active")){
+  sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+}else
+  sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+}
+ </script> -->
+
+
+
+
+</body>
+</html>
